@@ -56,7 +56,7 @@ configurations.configureEach {
     resolutionStrategy.cacheChangingModulesFor(0, "seconds")
 }
 /**
- * 发布使用
+ * 发布使用test
  * */
 afterEvaluate {
     publishing {
