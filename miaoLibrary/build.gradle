@@ -20,6 +20,10 @@ android {
         singleVariant("debug")
     }
 
+    buildFeatures {
+        viewBinding true
+    }
+
     buildTypes {
         release {
             minifyEnabled false
