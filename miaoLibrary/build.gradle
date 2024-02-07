@@ -55,7 +55,9 @@ tasks.register('generateSourcesJar', Jar) {
 configurations.configureEach {
     resolutionStrategy.cacheChangingModulesFor(0, "seconds")
 }
-
+/**
+ * 发布使用
+ * */
 afterEvaluate {
     publishing {
         publications {
