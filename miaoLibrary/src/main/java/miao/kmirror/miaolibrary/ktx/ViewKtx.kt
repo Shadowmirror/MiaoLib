@@ -81,23 +81,20 @@ fun View.click(debounceTime: Long = 1000L, onClick: (View) -> Unit) {
 }
 
 // 全局防抖点击事件
-object GlobalDebouncedClickListener : View.OnClickListener {
-    private const val GLOBAL_DEBOUNCE_TIME = 1000L // 默认全局防抖时间间隔
-    private var lastClickTime = 0L
-
-    override fun onClick(view: View) {
-        val currentTime = SystemClock.elapsedRealtime()
-        if (currentTime - lastClickTime >= GLOBAL_DEBOUNCE_TIME) {
-            lastClickTime = currentTime
-            // 执行点击事件
-            view.performClick()
-        }
-    }
+object GlobalDebouncedClickListener {
+    const val GLOBAL_DEBOUNCE_TIME = 300L // 默认全局防抖时间间隔
+    var lastClickTime = 0L
 }
 
 // 设置全局点击事件防抖
-fun View.clickGlobal() {
-    this.setOnClickListener(GlobalDebouncedClickListener)
+fun View.clickGlobal(onClick: (View) -> Unit) {
+    this.setOnClickListener { view ->
+        val currentTime = SystemClock.elapsedRealtime()
+        if (currentTime - GlobalDebouncedClickListener.lastClickTime >= GlobalDebouncedClickListener.GLOBAL_DEBOUNCE_TIME) {
+            GlobalDebouncedClickListener.lastClickTime = currentTime
+            onClick(view)
+        }
+    }
 }
 
 
@@ -112,6 +109,7 @@ fun View.visible() {
 fun View.inVisible() {
     visibility = View.INVISIBLE
 }
+
 val View.isGone: Boolean
     get() {
         return visibility == View.GONE

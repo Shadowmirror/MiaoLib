@@ -1,6 +1,9 @@
 package miao.kmirror.miaolibrary.ktx
 
 import android.content.Context
+import android.os.Parcelable
+import com.google.gson.Gson
+import java.io.Serializable
 import kotlin.math.roundToInt
 
 //dp转px
@@ -50,4 +53,17 @@ fun List<Number>.toStringList(): String {
 fun String.toNumberList(): List<Number> {
     val stringArray = this.split(",").toTypedArray()
     return stringArray.map { it.toDouble() }
+}
+
+
+//对Serializable扩展一个deepClone方法
+//使继承自Serializable的对象可以序列化然后反序列化，得到一个新对象
+fun Serializable.deepClone(): Serializable {
+    return Gson().fromJson(Gson().toJson(this), this.javaClass)
+}
+
+//对Parcelable扩展一个deepClone方法
+//使实现Parcelable接口的对象可以序列化然后反序列化，得到一个新对象
+fun Parcelable.deepClone(): Parcelable {
+    return Gson().fromJson(Gson().toJson(this), this.javaClass)
 }
