@@ -20,13 +20,11 @@ abstract class BasicFragment<VB : ViewBinding>(private var mIsLazyLoad: Boolean 
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        Log.i("Kmirror", "${this.javaClass.simpleName} onCreateView")
         mViewBinding = initViewBinding<VB>(this, inflater, container, false)
         return mViewBinding!!.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        Log.i("Kmirror", "${this.javaClass.simpleName} onViewCreated")
         super.onViewCreated(view, savedInstanceState)
         initData()
         if (!mIsLazyLoad) {
@@ -35,7 +33,6 @@ abstract class BasicFragment<VB : ViewBinding>(private var mIsLazyLoad: Boolean 
     }
 
     override fun onResume() {
-        Log.i("Kmirror", "${this.javaClass.simpleName} onResume")
         super.onResume()
         if (mIsLazyLoad && !mInitLazyLoaded) {
             mInitLazyLoaded = true
@@ -49,7 +46,6 @@ abstract class BasicFragment<VB : ViewBinding>(private var mIsLazyLoad: Boolean 
 
 
     override fun onDestroyView() {
-        Log.i("Kmirror", "${this.javaClass.simpleName} onDestroyView")
         super.onDestroyView()
     }
 
@@ -60,22 +56,18 @@ abstract class BasicFragment<VB : ViewBinding>(private var mIsLazyLoad: Boolean 
 
     override fun onStart() {
         super.onStart()
-        Log.i("Kmirror", "${this.javaClass.simpleName} onStart")
     }
 
     override fun onStop() {
         super.onStop()
-        Log.i("Kmirror", "${this.javaClass.simpleName} onStop")
     }
 
     override fun onPause() {
         super.onPause()
-        Log.i("Kmirror", "${this.javaClass.simpleName} onPause")
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        Log.i("Kmirror", "${this.javaClass.simpleName} onDestroy")
     }
 
 }

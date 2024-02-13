@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="BaseProgress">
+        <attr name="thumbDrawable" format="reference" />
+        <attr name="progressDrawable" format="reference" />
+        <attr name="trackDrawable" format="reference" />
+        <attr name="progress" format="integer" />
+        <attr name="maxProgress" format="integer" />
+    </declare-styleable>
+</resources>

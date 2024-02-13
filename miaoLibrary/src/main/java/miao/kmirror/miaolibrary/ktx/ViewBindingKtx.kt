@@ -15,7 +15,7 @@ inline fun <reified VB : ViewBinding> initViewBinding(view: View): VB {
         val inflate: Method = viewBindingClazz.getDeclaredMethod("bind", View::class.java)
         viewBinding = inflate.invoke(null, view) as VB
     } catch (e: Exception) {
-        Log.i("Kmirror", viewBindingClazz.simpleName + " init failed ")
+        Log.i("KmirrorTag", viewBindingClazz.simpleName + " init failed ")
     }
     return viewBinding!!
 
@@ -35,7 +35,7 @@ inline fun <reified VB : ViewBinding> initViewBinding(
         )
         viewBinding = inflate.invoke(null, layoutInflater, parent, contain) as VB
     } catch (e: Exception) {
-        Log.i("Kmirror", viewBindingClazz.simpleName + " init failed ")
+        Log.i("KmirrorTag", viewBindingClazz.simpleName + " init failed ")
     }
     return viewBinding!!
 }
@@ -56,7 +56,7 @@ fun <VB : ViewBinding> initViewBinding(any: Any, view: View): VB {
                             tempJavaClass = null
                             break
                         } catch (e: Exception) {
-                            Log.i("Kmirror", viewBindingClazz.simpleName + " init failed ")
+                            Log.i("KmirrorTag", viewBindingClazz.simpleName + " init failed ")
                         }
                     } catch (e: Exception) {
                         e.printStackTrace()
@@ -73,7 +73,7 @@ fun <VB : ViewBinding> initViewBinding(
     any: Any, layoutInflater: LayoutInflater, parent: ViewGroup? = null, contain: Boolean? = false
 ): VB {
     var tempJavaClass: Class<in Any>? = any.javaClass
-    Log.i("Kmirror", "initViewBinding ${tempJavaClass?.simpleName} ")
+    Log.i("KmirrorTag", "initViewBinding ${tempJavaClass?.simpleName} ")
     var viewBinding: VB? = null
     while (tempJavaClass != null) {
         tempJavaClass.genericSuperclass?.let { type ->
@@ -93,7 +93,7 @@ fun <VB : ViewBinding> initViewBinding(
                             tempJavaClass = null
                             break
                         } catch (e: Exception) {
-                            Log.i("Kmirror", viewBindingClazz.simpleName + " init failed ")
+                            Log.i("KmirrorTag", viewBindingClazz.simpleName + " init failed ")
                         }
                     } catch (e: Exception) {
                     }
