@@ -13,7 +13,7 @@
         <attr name="progressHeight" format="dimension" />
 
         <attr name="progress" format="float" />
-        <attr name="maxProgress" format="integer" />
-        <attr name="minProgress" format="integer" />
+        <attr name="maxProgress" format="float" />
+        <attr name="minProgress" format="float" />
     </declare-styleable>
 </resources>

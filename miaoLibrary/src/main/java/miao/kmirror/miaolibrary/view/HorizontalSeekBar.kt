@@ -14,11 +14,11 @@ import miao.kmirror.miaolibrary.ktx.width
 import kotlin.math.ceil
 
 class HorizontalSeekBar(context: Context, attributeSet: AttributeSet) : BaseProgress(context, attributeSet) {
-    private var mMaxProgress = 100
-    private var mMinProgress = 0
+    private var mMaxProgress = 100f
+    private var mMinProgress = 0f
     private var mProgress: Float = 0f
-    private var mThumbX = -1
-    private var mThumbY = -1
+    private var mThumbX = -1f
+    private var mThumbY = -1f
 
     private var mThumbDrawable: Drawable? = null
     private var mThumbWidth: Float = -1f
@@ -33,8 +33,8 @@ class HorizontalSeekBar(context: Context, attributeSet: AttributeSet) : BaseProg
     init {
         attributeSet.let {
             val typeArray = context.obtainStyledAttributes(it, R.styleable.BaseProgress)
-            mMaxProgress = typeArray.getInt(R.styleable.BaseProgress_maxProgress, 100)
-            mMinProgress = typeArray.getInt(R.styleable.BaseProgress_minProgress, 0)
+            mMaxProgress = typeArray.getFloat(R.styleable.BaseProgress_maxProgress, 100f)
+            mMinProgress = typeArray.getFloat(R.styleable.BaseProgress_minProgress, 0f)
             mProgress = typeArray.getFloat(R.styleable.BaseProgress_progress, 0f)
 
             mThumbDrawable = typeArray.getDrawable(R.styleable.BaseProgress_thumbDrawable)
@@ -81,8 +81,8 @@ class HorizontalSeekBar(context: Context, attributeSet: AttributeSet) : BaseProg
 
     override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
         super.onSizeChanged(w, h, oldw, oldh)
-        mThumbY = measuredHeight / 2
-        mThumbX = (getStartPadding() + getProgressWidth() * mProgress / mMaxProgress).toInt()
+        mThumbY = measuredHeight / 2f
+        mThumbX = calThumbX()
     }
 
     override fun onDraw(canvas: Canvas) {
@@ -91,9 +91,9 @@ class HorizontalSeekBar(context: Context, attributeSet: AttributeSet) : BaseProg
             if (mTrackDrawable != null) {
                 mTrackDrawable?.apply {
                     setBounds(
-                        getTrackStart(),
+                        getTrackStart().toInt(),
                         getTrackTop().toInt(),
-                        getTrackEnd(),
+                        getTrackEnd().toInt(),
                         getTrackBottom().toInt()
                     )
                     draw(canvas)
@@ -102,18 +102,18 @@ class HorizontalSeekBar(context: Context, attributeSet: AttributeSet) : BaseProg
 
             mProgressDrawable?.apply {
                 setBounds(
-                    getProgressStart(),
+                    getProgressStart().toInt(),
                     getProgressTop().toInt(),
-                    getProgressEnd(),
+                    getProgressEnd().toInt(),
                     getProgressBottom().toInt()
                 )
 //                draw(canvas)
             }
             canvas.withClip(
                 Rect(
-                    getProgressStart(),
+                    getProgressStart().toInt(),
                     getProgressTop().toInt(),
-                    mThumbX,
+                    mThumbX.toInt(),
                     getProgressBottom().toInt()
                 )
             ) {
@@ -167,7 +167,7 @@ class HorizontalSeekBar(context: Context, attributeSet: AttributeSet) : BaseProg
         } else if (eventX > getProgressEnd()) {
             mThumbX = getProgressEnd()
         } else {
-            mThumbX = eventX.toInt()
+            mThumbX = eventX
         }
         invalidate()
         mProgress = ((mThumbX.toFloat() - getProgressStart()) / getProgressWidth() * getProgressRange() + mMinProgress).apply {
@@ -177,6 +177,10 @@ class HorizontalSeekBar(context: Context, attributeSet: AttributeSet) : BaseProg
 
 
     fun getProgress() = mProgress
+
+    private fun calThumbX() = (getStartPadding() + (mProgress - mMinProgress) / getProgressRange() * getProgressWidth()).apply {
+        this.coerceAtMost(mMaxProgress).coerceAtLeast(mMinProgress)
+    }
 
     fun getProgressRange() = mMaxProgress - mMinProgress
 
@@ -193,8 +197,8 @@ class HorizontalSeekBar(context: Context, attributeSet: AttributeSet) : BaseProg
     private fun getProgressWidth() = getProgressEnd() - getProgressStart()
 
 
-    private fun getStartPadding() = ceil(mThumbWidth / 2.0).toInt() + paddingStart
-    private fun getEndPadding() = ceil(mThumbWidth / 2.0).toInt() + paddingEnd
+    private fun getStartPadding() = mThumbWidth / 2f + paddingStart
+    private fun getEndPadding() = mThumbWidth / 2f + paddingEnd
 
     private var mSeekBarListener: SeekBarListener? = null
     fun setSeekBarListener(seekBarListener: SeekBarListener) {
