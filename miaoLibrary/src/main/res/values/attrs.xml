@@ -1,9 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <declare-styleable name="BaseProgress">
+
         <attr name="thumbDrawable" format="reference" />
-        <attr name="progressDrawable" format="reference" />
+        <attr name="thumbHeight" format="dimension" />
+        <attr name="thumbWidth" format="dimension" />
+
         <attr name="trackDrawable" format="reference" />
+        <attr name="trackHeight" format="dimension" />
+
+        <attr name="progressDrawable" format="reference" />
+        <attr name="progressHeight" format="dimension" />
+
         <attr name="progress" format="integer" />
         <attr name="maxProgress" format="integer" />
     </declare-styleable>

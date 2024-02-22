@@ -36,3 +36,4 @@ dependencyResolutionManagement {
 rootProject.name = "MiaoLib"
 include ':app'
 include ':miaoLibrary'
+include ':simple'
