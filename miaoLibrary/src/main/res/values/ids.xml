@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="trackDrawable" type="id" />
+    <item name="thumbDrawable" type="id" />
+    <item name="progressDrawable" type="id" />
+</resources>

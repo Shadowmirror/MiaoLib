@@ -97,7 +97,6 @@ fun View.clickGlobal(onClick: (View) -> Unit) {
     }
 }
 
-
 fun View.gone() {
     visibility = View.GONE
 }
