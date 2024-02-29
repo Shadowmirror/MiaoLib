@@ -54,6 +54,7 @@ class KnobView(context: Context, attributeSet: AttributeSet) : BaseProgress(cont
 
     override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
         super.onSizeChanged(w, h, oldw, oldh)
+
     }
 
     override fun onDraw(canvas: Canvas) {
