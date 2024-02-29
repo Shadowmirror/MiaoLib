@@ -11,6 +11,23 @@
 [![](https://jitpack.io/v/Shadowmirror/MiaoLib.svg)](https://jitpack.io/#Shadowmirror/MiaoLib)
 本库接入了 JitPack 自动发包，我一般是有一堆东西更新的时候才会发包，如果您想导入包而不是直接 Copy 我的代码，可以通知我
 
+接入代码
+```groovy
+dependencyResolutionManagement {
+    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+    repositories {
+        mavenCentral()
+        maven { url 'https://jitpack.io' }
+    }
+}
+```
+
+```groovy
+dependencies {
+    implementation 'com.github.Shadowmirror.MiaoLib:MiaoLib:1.0.5'
+}
+```
+
 TODO:
 1. 协程版简易的 EventBus 工具
 2. MMKV 的持久化存储工具
