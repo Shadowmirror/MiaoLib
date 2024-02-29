@@ -41,7 +41,6 @@ android {
 
 dependencies {
     implementation libs.gson
-
     implementation libs.androidx.core.ktx
     implementation libs.androidx.appcompat
     implementation libs.material
@@ -76,13 +75,13 @@ afterEvaluate {
                 artifactId = 'MiaoLib'
                 version = version
             }
-            debug(MavenPublication) {
-                // Applies the component for the release build variant.
-                from components.debug
-                groupId = group
-                artifactId = 'MiaoLib-debug'
-                version = version
-            }
+//            debug(MavenPublication) {
+//                // Applies the component for the release build variant.
+//                from components.debug
+//                groupId = group
+//                artifactId = 'MiaoLib-debug'
+//                version = version
+//            }
         }
     }
 }
