@@ -19,13 +19,13 @@ abstract class BasicActivity<VB : ViewBinding> : AppCompatActivity() {
         setContentView(mViewBinding.root)
         initData()
         initView()
-        initLister()
+        initListener()
     }
 
 
     abstract fun initView()
     abstract fun initData()
-    abstract fun initLister()
+    abstract fun initListener()
 
 
     override fun dispatchTouchEvent(ev: MotionEvent?): Boolean {
