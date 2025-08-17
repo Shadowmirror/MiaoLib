@@ -1,8 +1,6 @@
 package miao.kmirror.miaolibrary.ui
 
 import android.os.Bundle
-import android.util.Log
-import android.view.LayoutInflater
 import android.view.MotionEvent
 import androidx.appcompat.app.AppCompatActivity
 import androidx.viewbinding.ViewBinding
@@ -29,17 +27,7 @@ abstract class BasicActivity<VB : ViewBinding> : AppCompatActivity() {
 
 
     override fun dispatchTouchEvent(ev: MotionEvent?): Boolean {
-        if (BasicPopDialog.getPopDialogList().isNotEmpty()) {
-            return false
-        }
-        return super.dispatchTouchEvent(ev)
-    }
 
-    override fun onBackPressed() {
-        if (BasicPopDialog.getPopDialogList().isNotEmpty()) {
-            BasicPopDialog.getPopDialogList().last().onBackPressed()
-        } else {
-            super.onBackPressed()
-        }
+        return super.dispatchTouchEvent(ev)
     }
 }
