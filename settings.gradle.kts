@@ -9,13 +9,6 @@ pluginManagement {
         }
         mavenCentral()
         gradlePluginPortal()
-        maven { url 'https://jitpack.io' }
-        maven {
-            url 'https://maven.aliyun.com/repository/public/'
-        }
-        maven {
-            url 'https://maven.aliyun.com/repository/central'
-        }
     }
 }
 dependencyResolutionManagement {
@@ -23,17 +16,9 @@ dependencyResolutionManagement {
     repositories {
         google()
         mavenCentral()
-        maven { url 'https://jitpack.io' }
-        maven {
-            url 'https://maven.aliyun.com/repository/public/'
-        }
-        maven {
-            url 'https://maven.aliyun.com/repository/central'
-        }
     }
 }
 
 rootProject.name = "MiaoLib"
-include ':app'
-include ':miaoLibrary'
-include ':simple'
+include(":miaoLibrary")
+include(":app")

@@ -24,7 +24,7 @@ dependencyResolutionManagement {
 
 ```groovy
 dependencies {
-    implementation 'com.github.Shadowmirror.MiaoLib:MiaoLib:1.0.5'
+    implementation 'com.github.Shadowmirror.MiaoLib:MiaoLib:{newVersion}'
 }
 ```
 
