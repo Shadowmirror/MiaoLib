@@ -1,2 +1,8 @@
 jdk:
   - openjdk17
+
+# JitPack 构建指令
+build:
+  commands:
+    # 只编译并发布 miaoLibrary 模块
+    - ./gradlew :miaoLibrary:publishToMavenLocal -Pgroup=com.github.Shadowmirror -Pversion=${VERSION}
