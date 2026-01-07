@@ -2,16 +2,19 @@ plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.jetbrainsKotlinAndroid)
     alias(libs.plugins.kotlinCompose)
+
+    // Optional, provides the @Serialize annotation for autogeneration of Serializers.
+    alias(libs.plugins.jetbrains.kotlin.serialization)
 }
 
 android {
     namespace = "miao.kmirror.miaolibrary.demo"
-    compileSdk = 35
+    compileSdk = 36
 
     defaultConfig {
         applicationId = "miao.kmirror.miaolibrary.demo"
-        minSdk = 21
-        targetSdk = 35
+        minSdk = 23
+        targetSdk = 36
         versionCode = 1
         versionName = "1.0"
 
@@ -43,8 +46,14 @@ android {
 
 dependencies {
 
-    implementation("androidx.fragment:fragment-ktx:1.8.8")
-    implementation("androidx.constraintlayout:constraintlayout:2.2.1")
+    implementation(libs.androidx.fragment.ktx)
+    implementation(libs.androidx.constraintlayout)
+
+    implementation(libs.androidx.navigation3.ui)
+    implementation(libs.androidx.navigation3.runtime)
+    implementation(libs.androidx.lifecycle.viewmodel.navigation3)
+    implementation(libs.androidx.material3.adaptive.navigation3)
+    implementation(libs.kotlinx.serialization.core)
 
     implementation(libs.androidx.appcompat)
     implementation(libs.androidx.core.ktx)

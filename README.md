@@ -28,8 +28,4 @@ dependencies {
 }
 ```
 
-TODO:
-1. 协程版简易的 EventBus 工具
-2. MMKV 的持久化存储工具
-3. 以及各种我想到的一些基础控件
 
