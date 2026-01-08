@@ -1,6 +1,9 @@
 package miao.kmirror.miaolibrary.ui
 
 import android.app.Activity
+import android.content.Context
+import android.content.ContextWrapper
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,52 +19,57 @@ import androidx.savedstate.setViewTreeSavedStateRegistryOwner
 
 
 class ViewDialog(
-    private val activity: Activity,
+    private val context: Context,
     private val cancelableOnBack: Boolean = true, // 是否允许返回键关闭
     private val showBgShadow: Boolean = true, // 是否展示默认底层蒙版
     private val bgShadowColorArgb: Int = 0x7F000000,
     private val animator: DialogAnimator = DialogAnimatorDefault.ScaleAlphaFromCenterAnimator
 ) : DefaultLifecycleObserver {
 
+    private val activity: Activity? = findActivity(context)
     private var rootView: View? = null
     private var overlay: View? = null
     private var isShowing = false
-    private val container: ViewGroup by lazy {
-        activity.findViewById(android.R.id.content)
+    private val container: ViewGroup? by lazy { // 改为可空，因为 activity 可能为 null
+        activity?.findViewById(android.R.id.content)
     }
 
     // 增加一个返回键回调
     private var backCallback: OnBackPressedCallback? = null
 
     init {
-        if (activity is ComponentActivity) {
+        if (activity == null) {
+            Log.w("Kmirror", "ViewDialog 传入的 Context 没有 Activity 作为载体，请检查代码")
+        } else if (activity is ComponentActivity) {
             activity.lifecycle.addObserver(this)
         }
     }
 
     /** XML 布局 */
     fun show(layoutResId: Int, onViewCreated: ((View) -> Unit)? = null) {
-        if (isShowing) return
-        val contentView = LayoutInflater.from(activity).inflate(layoutResId, container, false)
+        if (isShowing || container == null) return // 增加 container 检查
+        val contentView = LayoutInflater.from(context).inflate(layoutResId, container, false)
         onViewCreated?.invoke(contentView)
         showView(contentView)
-
     }
 
     /** Compose 布局 */
     fun showCompose(content: @Composable () -> Unit) {
-        if (isShowing) return
-        val contentView = ComposeView(activity).apply { setContent { content() } }
+        if (isShowing || container == null) return // 增加 container 检查
+        val contentView = ComposeView(context).apply { setContent { content() } }
         showView(contentView)
     }
 
+
     /** 核心显示逻辑，带蒙版 */
     private fun showView(view: View) {
+        val currentActivity = activity ?: return
+        val rootContainer = container ?: return
         if (isShowing) return
         rootView = view
 
         // 创建蒙版层
-        val overlayView = View(activity).apply {
+        val overlayView = View(currentActivity).apply {
             if (showBgShadow) {
                 setBackgroundColor(bgShadowColorArgb) // 半透明黑色
             } else {
@@ -73,10 +81,10 @@ class ViewDialog(
         overlay = overlayView
 
         // 绑定 lifecycle owner
-        if (activity is ComponentActivity) {
-            view.setViewTreeLifecycleOwner(activity)
-            view.setViewTreeViewModelStoreOwner(activity)
-            view.setViewTreeSavedStateRegistryOwner(activity)
+        if (currentActivity is ComponentActivity) {
+            view.setViewTreeLifecycleOwner(currentActivity)
+            view.setViewTreeViewModelStoreOwner(currentActivity)
+            view.setViewTreeSavedStateRegistryOwner(currentActivity)
 
 
             // --- 支持 Android 15/16 预测性返回 ---
@@ -87,7 +95,7 @@ class ViewDialog(
                     }
                 }
                 // 将回调注册到 Activity，这样系统才能感知到“这一层”可以拦截返回
-                activity.onBackPressedDispatcher.addCallback(activity, backCallback!!)
+                currentActivity.onBackPressedDispatcher.addCallback(currentActivity, backCallback!!)
             }
         }
 
@@ -107,14 +115,14 @@ class ViewDialog(
 //        view.setOnKeyListener(keyListener)
 
         // 添加蒙版和内容到根布局
-        container.addView(
+        rootContainer.addView(
             overlayView, ViewGroup.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT,
                 ViewGroup.LayoutParams.MATCH_PARENT
             )
         )
 
-        container.addView(
+        rootContainer.addView(
             view, ViewGroup.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT,
                 ViewGroup.LayoutParams.MATCH_PARENT
@@ -150,8 +158,9 @@ class ViewDialog(
     }
 
     private fun cleanup() {
-        rootView?.let { container.removeView(it) }
-        overlay?.let { container.removeView(it) }
+        val rootContainer = container ?: return
+        rootView?.let { rootContainer.removeView(it) }
+        overlay?.let { rootContainer.removeView(it) }
         rootView = null
         overlay = null
         isShowing = false
@@ -159,6 +168,17 @@ class ViewDialog(
 
     override fun onDestroy(owner: LifecycleOwner) {
         dismiss()
-        if (activity is ComponentActivity) activity.lifecycle.removeObserver(this)
+        (activity as? ComponentActivity)?.lifecycle?.removeObserver(this)
+    }
+
+    private fun findActivity(context: Context): Activity? {
+        var ctx = context
+        while (ctx is ContextWrapper) {
+            if (ctx is Activity) {
+                return ctx
+            }
+            ctx = ctx.baseContext
+        }
+        return null
     }
 }
