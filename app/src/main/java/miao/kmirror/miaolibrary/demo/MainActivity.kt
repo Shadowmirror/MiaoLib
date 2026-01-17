@@ -21,12 +21,13 @@ import kotlinx.serialization.Serializable
 import miao.kmirror.miaolibrary.demo.screen.dialog.DialogScreen
 import miao.kmirror.miaolibrary.demo.screen.main.MainScreen
 import miao.kmirror.miaolibrary.demo.ui.theme.MiaoLibTheme
+import miao.kmirror.miaolibrary.ktx.hideSystemBars
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        // 调用扩展函数隐藏导航栏和状态栏
+        hideSystemBars()
         setContent {
             MiaoLibTheme {
                 val backStack = remember { mutableStateListOf<Any>(MainScreenNav) }

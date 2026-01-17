@@ -10,21 +10,57 @@ import android.view.ViewGroup
 import androidx.activity.ComponentActivity
 import androidx.activity.OnBackPressedCallback
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.remember
 import androidx.compose.ui.platform.ComposeView
+import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.DefaultLifecycleObserver
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.setViewTreeLifecycleOwner
 import androidx.lifecycle.setViewTreeViewModelStoreOwner
 import androidx.savedstate.setViewTreeSavedStateRegistryOwner
 
-
 class ViewDialog(
     private val context: Context,
     private val cancelableOnBack: Boolean = true, // 是否允许返回键关闭
     private val showBgShadow: Boolean = true, // 是否展示默认底层蒙版
     private val bgShadowColorArgb: Int = 0x7F000000,
-    private val animator: DialogAnimator = DialogAnimatorDefault.ScaleAlphaFromCenterAnimator
+    private val animator: DialogAnimator = DialogAnimatorDefault.ScaleAlphaFromCenterAnimator,
+    private val onDismiss: () -> Unit = {},
 ) : DefaultLifecycleObserver {
+
+    companion object {
+        @Composable
+        fun ComposeDialog(
+            cancelableOnBack: Boolean = true, // 是否允许返回键关闭
+            showBgShadow: Boolean = true, // 是否展示默认底层蒙版
+            bgShadowColorArgb: Int = 0x7F000000,
+            animator: DialogAnimator = DialogAnimatorDefault.ScaleAlphaFromCenterAnimator,
+            onDismiss: () -> Unit = {},
+            content: @Composable () -> Unit,
+        ) {
+            val context = LocalContext.current
+            val viewDialog = remember {
+                ViewDialog(
+                    context,
+                    cancelableOnBack,
+                    showBgShadow,
+                    bgShadowColorArgb,
+                    animator,
+                    onDismiss
+                )
+            }
+            DisposableEffect(viewDialog) {
+                viewDialog.showCompose {
+                    content()
+                }
+                onDispose {
+                    viewDialog.dismiss()
+                }
+            }
+        }
+    }
+
 
     private val activity: Activity? = findActivity(context)
     private var rootView: View? = null
@@ -56,7 +92,13 @@ class ViewDialog(
     /** Compose 布局 */
     fun showCompose(content: @Composable () -> Unit) {
         if (isShowing || container == null) return // 增加 container 检查
-        val contentView = ComposeView(context).apply { setContent { content() } }
+        val contentView = ComposeView(context).apply {
+            setContent {
+                DialogThemeConfig.themeProvider {
+                    content()
+                }
+            }
+        }
         showView(contentView)
     }
 
@@ -85,7 +127,6 @@ class ViewDialog(
             view.setViewTreeLifecycleOwner(currentActivity)
             view.setViewTreeViewModelStoreOwner(currentActivity)
             view.setViewTreeSavedStateRegistryOwner(currentActivity)
-
 
             // --- 支持 Android 15/16 预测性返回 ---
             if (cancelableOnBack) {
@@ -139,7 +180,7 @@ class ViewDialog(
 
     fun dismiss() {
         if (!isShowing) return
-
+        onDismiss()
         // 移除回调，否则 Activity 正常的返回键会失效
         backCallback?.remove()
         backCallback = null
