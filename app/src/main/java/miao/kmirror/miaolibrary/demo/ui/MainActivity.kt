@@ -1,4 +1,4 @@
-package miao.kmirror.miaolibrary.demo
+package miao.kmirror.miaolibrary.demo.ui
 
 import android.os.Bundle
 import androidx.activity.compose.setContent
@@ -17,12 +17,14 @@ import androidx.compose.runtime.remember
 import androidx.navigation3.runtime.NavEntry
 import androidx.navigation3.runtime.NavKey
 import androidx.navigation3.ui.NavDisplay
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.serialization.Serializable
-import miao.kmirror.miaolibrary.demo.screen.dialog.DialogScreen
-import miao.kmirror.miaolibrary.demo.screen.main.MainScreen
+import miao.kmirror.miaolibrary.demo.ui.screen.dialog.DialogScreen
+import miao.kmirror.miaolibrary.demo.ui.screen.main.MainScreen
+import miao.kmirror.miaolibrary.demo.ui.screen.student.StudentScreen
 import miao.kmirror.miaolibrary.demo.ui.theme.MiaoLibTheme
 import miao.kmirror.miaolibrary.ktx.hideSystemBars
-
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,6 +44,10 @@ class MainActivity : AppCompatActivity() {
 
                             is DialogScreenNav -> NavEntry(key) {
                                 DialogScreen()
+                            }
+
+                            is StudentScreenNav -> NavEntry(key){
+                                StudentScreen()
                             }
 
                             else -> error("Unknown key: $key")
@@ -93,3 +99,7 @@ data object MainScreenNav : NavKey
 
 @Serializable
 data object DialogScreenNav : NavKey
+
+
+@Serializable
+data object StudentScreenNav : NavKey

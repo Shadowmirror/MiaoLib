@@ -4,5 +4,7 @@ plugins {
     alias(libs.plugins.jetbrainsKotlinAndroid) apply false
     alias(libs.plugins.androidLibrary) apply false
     alias(libs.plugins.kotlinCompose) apply false
+    id("com.google.dagger.hilt.android") version "2.57.1" apply false
+    id("com.google.devtools.ksp") version "2.3.4" apply false
 
 }

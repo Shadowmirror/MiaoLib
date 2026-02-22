@@ -1,4 +1,4 @@
-package miao.kmirror.miaolibrary.demo.screen.dialog
+package miao.kmirror.miaolibrary.demo.ui.screen.dialog
 
 import androidx.activity.compose.BackHandler
 import androidx.compose.animation.AnimatedVisibility
@@ -60,7 +60,6 @@ fun DialogScreen() {
     Scaffold(
         modifier = Modifier.fillMaxSize()
     ) {
-        val context = LocalContext.current
         var isShowDialog1 by remember { mutableStateOf(false) }
         var isShowDialog2 by remember { mutableStateOf(false) }
         LazyColumn(

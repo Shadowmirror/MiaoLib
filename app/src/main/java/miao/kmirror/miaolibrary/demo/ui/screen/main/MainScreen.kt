@@ -1,4 +1,4 @@
-package miao.kmirror.miaolibrary.demo.screen.main
+package miao.kmirror.miaolibrary.demo.ui.screen.main
 
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -15,7 +15,8 @@ import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import miao.kmirror.miaolibrary.demo.DialogScreenNav
+import miao.kmirror.miaolibrary.demo.ui.DialogScreenNav
+import miao.kmirror.miaolibrary.demo.ui.StudentScreenNav
 
 @Composable
 fun MainScreen(
@@ -42,6 +43,17 @@ fun MainScreen(
                 ) {
                     Text(
                         text = "Dialog 页"
+                    )
+                }
+                Spacer(modifier = Modifier.height(20.dp))
+                Button(
+                    onClick = {
+                        backStack.add(StudentScreenNav)
+                    },
+                    modifier = Modifier.fillMaxSize(0.8f)
+                ) {
+                    Text(
+                        text = "Student 页"
                     )
                 }
             }

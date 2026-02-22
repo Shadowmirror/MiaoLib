@@ -5,6 +5,9 @@ plugins {
 
     // Optional, provides the @Serialize annotation for autogeneration of Serializers.
     alias(libs.plugins.jetbrains.kotlin.serialization)
+
+    id("com.google.devtools.ksp")
+    id("com.google.dagger.hilt.android")
 }
 
 android {
@@ -46,8 +49,31 @@ android {
 
 dependencies {
 
+    implementation("com.google.dagger:hilt-android:2.57.1")
+    ksp("com.google.dagger:hilt-android-compiler:2.57.1")
+    implementation("androidx.hilt:hilt-navigation-compose:1.3.0")
+
+    implementation("androidx.compose.material:material-icons-extended")
+
+    val room_version = "2.8.4"
+    implementation("androidx.room:room-runtime:${room_version}")
+    ksp("androidx.room:room-compiler:$room_version")
+    implementation("androidx.room:room-ktx:${room_version}")
+
+
+    implementation("com.squareup.retrofit2:retrofit:3.0.0")
+    implementation("com.squareup.retrofit2:converter-kotlinx-serialization:3.0.0")
+
+    implementation(platform("com.squareup.okhttp3:okhttp-bom:5.3.0"))
+    implementation("com.squareup.okhttp3:okhttp")
+    implementation("com.squareup.okhttp3:logging-interceptor")
+
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.10.0")
+
     implementation(libs.androidx.fragment.ktx)
     implementation(libs.androidx.constraintlayout)
+
+
 
     implementation(libs.androidx.navigation3.ui)
     implementation(libs.androidx.navigation3.runtime)
