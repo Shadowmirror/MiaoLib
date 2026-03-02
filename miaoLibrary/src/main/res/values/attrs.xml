@@ -18,4 +18,12 @@
         <attr name="maxProgress" format="float" />
         <attr name="minProgress" format="float" />
     </declare-styleable>
+
+    <declare-styleable name="NinePatchView">
+        <attr name="np_src" format="reference" />
+        <attr name="np_leftSplit" format="integer" />
+        <attr name="np_topSplit" format="integer" />
+        <attr name="np_rightSplit" format="integer" />
+        <attr name="np_bottomSplit" format="integer" />
+    </declare-styleable>
 </resources>

@@ -1,4 +1,4 @@
-package miao.kmirror.miaolibrary.demo.ui.view
+package miao.kmirror.miaolibrary.view
 
 import android.annotation.SuppressLint
 import android.content.Context
@@ -13,11 +13,11 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.viewinterop.AndroidView
-import miao.kmirror.miaolibrary.demo.R
+import miao.kmirror.miaolibrary.R
 import kotlin.math.max
 import kotlin.math.min
 
-class UnifiedNinePatchView @JvmOverloads constructor(
+class NinePatchView @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
     defStyleAttr: Int = 0
@@ -44,10 +44,10 @@ class UnifiedNinePatchView @JvmOverloads constructor(
 
     init {
         if (attrs != null) {
-            val typedArray = context.obtainStyledAttributes(attrs, R.styleable.UnifiedNinePatchView)
+            val typedArray = context.obtainStyledAttributes(attrs, R.styleable.NinePatchView)
 
             // 获取图片
-            val drawable = typedArray.getDrawable(R.styleable.UnifiedNinePatchView_np_src)
+            val drawable = typedArray.getDrawable(R.styleable.NinePatchView_np_src)
             if (drawable is BitmapDrawable) {
                 this.bitmap = drawable.bitmap
                 originalWidth = bitmap!!.width
@@ -55,10 +55,10 @@ class UnifiedNinePatchView @JvmOverloads constructor(
             }
 
             // 获取分割线配置
-            leftSplit = typedArray.getInt(R.styleable.UnifiedNinePatchView_np_leftSplit, 0)
-            topSplit = typedArray.getInt(R.styleable.UnifiedNinePatchView_np_topSplit, 0)
-            rightSplit = typedArray.getInt(R.styleable.UnifiedNinePatchView_np_rightSplit, 0)
-            bottomSplit = typedArray.getInt(R.styleable.UnifiedNinePatchView_np_bottomSplit, 0)
+            leftSplit = typedArray.getInt(R.styleable.NinePatchView_np_leftSplit, 0)
+            topSplit = typedArray.getInt(R.styleable.NinePatchView_np_topSplit, 0)
+            rightSplit = typedArray.getInt(R.styleable.NinePatchView_np_rightSplit, 0)
+            bottomSplit = typedArray.getInt(R.styleable.NinePatchView_np_bottomSplit, 0)
 
             typedArray.recycle()
         }
@@ -204,7 +204,7 @@ class UnifiedNinePatchView @JvmOverloads constructor(
 
 @SuppressLint("LocalContextResourcesRead")
 @Composable
-fun UnifiedNinePatchView(
+fun NinePatchView(
     @DrawableRes drawableRes: Int,
     modifier: Modifier = Modifier,
     leftSplit: Int = 0,
@@ -216,7 +216,7 @@ fun UnifiedNinePatchView(
 
     // remember 保证不会在重组时重复创建实例
     val unifiedView = remember(drawableRes) {
-        UnifiedNinePatchView(context).apply {
+        NinePatchView(context).apply {
             setImageResource(drawableRes)
             setSplits(leftSplit, topSplit, rightSplit, bottomSplit)
         }

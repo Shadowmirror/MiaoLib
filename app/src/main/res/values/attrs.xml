@@ -1,10 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <declare-styleable name="UnifiedNinePatchView">
-        <attr name="np_src" format="reference" />
-        <attr name="np_leftSplit" format="integer" />
-        <attr name="np_topSplit" format="integer" />
-        <attr name="np_rightSplit" format="integer" />
-        <attr name="np_bottomSplit" format="integer" />
-    </declare-styleable>
+
 </resources>
