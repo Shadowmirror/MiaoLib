@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.ViewActivity">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
+
+        <miao.kmirror.miaolibrary.demo.ui.view.UnifiedNinePatchView
+            android:layout_width="match_parent"
+            android:layout_height="22dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:np_leftSplit="200"
+            app:np_rightSplit="250"
+            app:np_src="@drawable/img_btn_test" />
+
+        <miao.kmirror.miaolibrary.demo.ui.view.UnifiedNinePatchView
+            android:layout_width="22dp"
+            android:layout_height="200dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:np_bottomSplit="250"
+            app:np_src="@drawable/img_btn_test_2"
+            app:np_topSplit="200" />
+
+        <miao.kmirror.miaolibrary.demo.ui.view.UnifiedNinePatchView
+            android:layout_width="match_parent"
+            android:layout_height="22dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:np_src="@drawable/img_btn_test" />
+
+        <miao.kmirror.miaolibrary.demo.ui.view.UnifiedNinePatchView
+            android:layout_width="match_parent"
+            android:layout_height="22dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:np_bottomSplit="132"
+            app:np_leftSplit="0"
+            app:np_rightSplit="492"
+            app:np_src="@drawable/img_btn_test"
+            app:np_topSplit="0" />
+
+
+        <miao.kmirror.miaolibrary.demo.ui.view.UnifiedNinePatchView
+            android:layout_width="204dp"
+            android:layout_height="84dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:np_bottomSplit="68"
+            app:np_leftSplit="200"
+            app:np_rightSplit="250"
+            app:np_src="@drawable/img_btn_test"
+            app:np_topSplit="64" />
+
+
+    </LinearLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
